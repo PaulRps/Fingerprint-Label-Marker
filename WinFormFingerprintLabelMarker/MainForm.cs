@@ -14,7 +14,7 @@ using WinFormFingerprintLabelMarker.utils;
 
 namespace WinFormFingerprintLabelMarker
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private MenuService _menuService;
 
@@ -26,7 +26,7 @@ namespace WinFormFingerprintLabelMarker
 
         private Image _lastImage;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 

@@ -1,6 +1,6 @@
 ﻿namespace WinFormFingerprintLabelMarker
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBoxImageNames = new System.Windows.Forms.ListBox();
             this.buttonNext = new System.Windows.Forms.Button();
@@ -45,8 +47,6 @@
             this.pictureBoxPreviewedImage = new System.Windows.Forms.PictureBox();
             this.labelPreviewedImage = new System.Windows.Forms.Label();
             this.labelCordinates = new System.Windows.Forms.Label();
-            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreviewedImage)).BeginInit();
@@ -79,6 +79,18 @@
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.loadToolStripMenuItem.Text = "Load dataset";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // saveGroundTruthToolStripMenuItem
+            // 
+            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
+            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
+            // 
+            // loadCheckpointFileToolStripMenuItem
+            // 
+            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
+            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
             // 
             // settingsToolStripMenuItem
             // 
@@ -201,19 +213,7 @@
             this.labelCordinates.Size = new System.Drawing.Size(0, 13);
             this.labelCordinates.TabIndex = 13;
             // 
-            // saveGroundTruthToolStripMenuItem
-            // 
-            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
-            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
-            // 
-            // loadCheckpointFileToolStripMenuItem
-            // 
-            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
-            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
-            // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -232,8 +232,8 @@
             this.Controls.Add(this.listBoxImageNames);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainForm";
+            this.Text = "Fingerprint Label Marker";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
