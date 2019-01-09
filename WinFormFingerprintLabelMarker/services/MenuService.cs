@@ -55,9 +55,10 @@ namespace WinFormFingerprintLabelMarker.services
             return sing;
         }
 
-        public string getMousePosition(MouseEventArgs e)
+        public void computeMousePosition(MouseEventArgs e, Label lb1, Label lb2)
         {
-            return string.Format("(x, y) - ({0},{1})  (width, height) - ({2}, {3})", e.X, e.Y, e.X+GraphicsUtils.offset, e.Y+GraphicsUtils.offset);
+            lb1.Text = string.Format("({0},{1})", e.X, e.Y);
+            lb2.Text = string.Format("({0},{1})", e.X + GraphicsUtils.offset, e.Y + GraphicsUtils.offset);            
         }
 
         public void storeCurrentImage(Image img)
@@ -68,6 +69,17 @@ namespace WinFormFingerprintLabelMarker.services
         public Image getCurrentImage()
         {
             return GraphicsUtils._currentImage;
+        }
+
+        public Image resetCurrentLabels(Dictionary<String, List<GroundTruth>> map, string nameImage)
+        {
+            List<GroundTruth> l;
+            if (map.TryGetValue(nameImage, out l))
+            {
+                map.Remove(nameImage);
+            }
+
+            return getCurrentImage();
         }
 
         public void addGroundTruth(Dictionary<String, List<GroundTruth>> map, string nameImage, GroundTruth g)

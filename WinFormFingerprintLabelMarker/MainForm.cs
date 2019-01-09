@@ -104,7 +104,12 @@ namespace WinFormFingerprintLabelMarker
 
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
-            labelCordinates.Text = _menuService.getMousePosition(e);
+            _menuService.computeMousePosition(e, labelUpperLeftPoint, labelBottomRightPoint);
+        }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            pictureBoxImage.Image = _menuService.resetCurrentLabels(_groundTruth, listBoxImageNames.SelectedItem.ToString());
         }
     }
 }
