@@ -31,7 +31,7 @@ The three classes are represented by 3 colors: blue, green and red, respectively
 
 * Select a image and mark the labels as you wish - you have to click on mouse buttons: left = Core; middle = Delta; right = Neg. There are subtitles on screen that explains the selected box colors.
 
-* Save the marked labels by clicking on menu option 'Save GroundTruth' - it generates a folder with a txt file (text info) and folders with the images separeted by class.
+* Save the marked labels by clicking on menu option 'Save Ground Truth' - it generates a folder with a txt file (text info) and folders with the images separeted by class.
 
 * You can restart at the point where you stopped at last time, you have to click on menu option 'Load Checkpoint File' and choose the saved txt file.
 
