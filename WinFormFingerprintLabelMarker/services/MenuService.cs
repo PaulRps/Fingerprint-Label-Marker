@@ -98,13 +98,30 @@ namespace WinFormFingerprintLabelMarker.services
             map[nameImage].RemoveAt(map[nameImage].Count - 1);
         }
 
+        public void saveGroundTruth(FolderBrowserDialog folderBrowser, Dictionary<String, List<GroundTruth>> map, string datasetName)
+        {
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+
+                List<string> data = FileUtils.buildTextData(map);
+
+                FileUtils.writeTxtFile(data, datasetName, folderBrowser.SelectedPath);
+
+                Dictionary<SingularityType, List<GroundTruth>> images = FileUtils.buildImageData(map);
+
+                FileUtils.saveImages(images, folderBrowser.SelectedPath, "format");
+
+                map.Clear();
+
+            }
+
+        }
+
         private Image markArea(PictureBox image, Singularity sing)
         {
             try
-            {
-                                
+            {                                
                 return GraphicsUtils.drawRectangle(image, sing);
-
             }
             catch (OutOfMemoryException ex)
             {

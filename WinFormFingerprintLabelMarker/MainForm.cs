@@ -111,5 +111,13 @@ namespace WinFormFingerprintLabelMarker
         {
             pictureBoxImage.Image = _menuService.resetCurrentLabels(_groundTruth, listBoxImageNames.SelectedItem.ToString());
         }
+
+        private void saveGroundTruthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_groundTruth != null && _groundTruth.Count > 0)
+            {
+                _menuService.saveGroundTruth(folderBrowser, _groundTruth, _datasetName);
+            }
+        }
     }
 }
