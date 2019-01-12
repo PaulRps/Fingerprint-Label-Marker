@@ -12,6 +12,7 @@ namespace WinFormFingerprintLabelMarker.model
         public string _datasetName { get; set; }
         public Singularity _sing { get; set; }
 
+        public GroundTruth() { _sing = new Singularity(); }
         public GroundTruth(string imageName, string datasetName, Singularity sing)
         {
             _imageName = imageName;

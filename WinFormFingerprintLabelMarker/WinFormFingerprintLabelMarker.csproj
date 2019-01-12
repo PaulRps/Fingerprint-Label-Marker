@@ -57,6 +57,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\MenuService.cs" />
+    <Compile Include="utils\FileUtils.cs" />
     <Compile Include="utils\GraphicsUtils.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -69,6 +70,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -84,6 +86,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="icons8-documents-folder-52.png" />
+    <Content Include="icons8-documents-folder-filled-52-2.png" />
+    <Content Include="icons8-documents-folder-filled-52.png" />
+    <Content Include="icons8-fingerprint-scan-filled-100.png" />
+    <Content Include="icons8-fingerprint-scan-filled-64.png" />
+    <Content Include="icons8-save-52.png" />
+    <Content Include="icons8-txt-52.png" />
+    <Content Include="icons8_fingerprint_scan_filled_100_vXJ_icon.ico" />
+    <None Include="resources\icons\icons8-txt-52.png" />
+    <None Include="resources\icons\icons8-save-52.png" />
+    <None Include="resources\icons\icons8-documents-folder-filled-52.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

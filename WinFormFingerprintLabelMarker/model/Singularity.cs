@@ -14,6 +14,8 @@ namespace WinFormFingerprintLabelMarker.model
         public Image _image { get; set; }
         public SingularityType _type { get; set; }        
 
+        public Singularity() { }
+
         public Singularity(int x, int y, SingularityType type)
         {
             _x = x;
@@ -40,6 +42,22 @@ namespace WinFormFingerprintLabelMarker.model
             }
 
             return 0;
+        }
+
+        public static SingularityType stringToSingType(string s)
+        {
+            switch (s)
+            {
+                case "Core":
+                    return SingularityType.Core;
+                case "Delta":
+                    return SingularityType.Delta;
+                    
+                case "Neg":
+                    return SingularityType.Neg;                    
+            }
+
+            return SingularityType.None;            
         }
     }
 

@@ -54,6 +54,11 @@ namespace WinFormFingerprintLabelMarker.utils
         
         public static Image drawRectangle(PictureBox image, Singularity sing)
         {
+            if (image.Image == null)
+            {
+                return null;
+            }
+
             Bitmap img = new Bitmap(image.Image);
             Graphics graphic = Graphics.FromImage(img);
 
