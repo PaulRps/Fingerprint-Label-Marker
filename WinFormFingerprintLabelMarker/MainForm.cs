@@ -41,7 +41,7 @@ namespace WinFormFingerprintLabelMarker
             if (files != null)
             {
                 listBoxImageNames.DataSource = files;
-                _folderPath = @"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";
+                _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";
                 string [] folders =_folderPath.Split(Path.DirectorySeparatorChar);
                 _datasetName = folders[folders.Length-1];
             }
@@ -117,6 +117,25 @@ namespace WinFormFingerprintLabelMarker
             if (_groundTruth != null && _groundTruth.Count > 0)
             {
                 _menuService.saveGroundTruth(folderBrowser, _groundTruth, _datasetName);
+            }
+        }
+
+        private void loadCheckpointFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string imgName = null;
+
+            if (_folderPath != null)
+            {
+                imgName = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
+            }
+
+            if (imgName == null || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
+            {
+                MessageBox.Show("Load the dataset to continue marking!");
+
+            } else
+            {
+                listBoxImageNames.SelectedItem = imgName;
             }
         }
     }

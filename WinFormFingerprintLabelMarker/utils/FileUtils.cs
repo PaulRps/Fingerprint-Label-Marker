@@ -16,6 +16,8 @@ namespace WinFormFingerprintLabelMarker.utils
 
         private static readonly string _bodyFormat = "{0};{1};{2};{3}";
 
+        public static readonly char _token = ';';
+
         public static void writeTxtFile(List<string> data, string nameFile, string path)
         {
             string filePath = Path.Combine(path, string.Format("{0}.txt", nameFile));
@@ -49,7 +51,7 @@ namespace WinFormFingerprintLabelMarker.utils
 
                         Directory.CreateDirectory(folder);
 
-                        folder = Path.Combine(folder, string.Format("{0}_{1}.bmp", g._imageName.Split('.')[0], image.Key.ToString()));
+                        folder = Path.Combine(folder, string.Format("{0}_{1}.{2}", g._imageName.Split('.')[0], image.Key.ToString()), format);
 
                         g._sing._image.Save(folder, ImageFormat.Bmp);
 
@@ -86,7 +88,7 @@ namespace WinFormFingerprintLabelMarker.utils
 
             return data;
         }
-
+                
         public static Dictionary<SingularityType,List<GroundTruth>> buildImageData(Dictionary<String, List<GroundTruth>> map)
         {
             Dictionary<SingularityType, List<GroundTruth>> data = new Dictionary<SingularityType, List<GroundTruth>>();

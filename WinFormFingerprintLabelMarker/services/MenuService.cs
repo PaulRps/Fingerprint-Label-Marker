@@ -15,23 +15,74 @@ namespace WinFormFingerprintLabelMarker.services
     {
         public string[] loadDataset(FolderBrowserDialog folderBrowser)
         {
-            List<string> files = new List<string>();
+            List<string> files = null;
 
             if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
-                string [] paths = Directory.GetFiles(@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210");
+                string[] paths = Directory.GetFiles(folderBrowser.SelectedPath);//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210");
+
+                files = new List<string>();
 
                 foreach (string path in paths)
                 {
                     files.Add(Path.GetFileName(path));
                 }
-                
+
                 return files.ToArray();
             }
 
             return null;
         }
 
+
+        public string loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
+        {
+            string result = null;
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {   
+                string [] data = File.ReadAllLines(openFile.FileName);
+                string[] txt = null;
+                List<Singularity> list = new List<Singularity>();
+
+                for(int i = data.Length-1; i >= 0; i--)
+                {
+                    txt = data[i].Split(FileUtils._token);
+             
+                    if (txt.Length == 1 && txt[0].CompareTo("") != 0)
+                    {
+                        result = txt[0].Trim();             
+                        break;
+
+                    } else if (txt[0].CompareTo("") != 0)
+                    {
+                        Singularity sing = new Singularity();
+                        sing._x = int.Parse(txt[0]);
+                        sing._y = int.Parse(txt[1]);
+                        sing._type = Singularity.stringToSingType(txt[2].Trim());
+                        list.Add(sing);
+                        
+                    }
+                }
+
+                foreach (Singularity s in list)
+                {
+                    if (image.Image == null)
+                    {
+                        image.Image = new Bitmap(path + Path.DirectorySeparatorChar + result);
+                        storeCurrentImage(image.Image);
+                        image.Width = image.Image.Width;
+                        image.Height = image.Image.Height;
+                    }
+
+                    markArea(image, s);
+                }
+
+            }
+
+            return result;
+        }
+        
         public Singularity markLabel(MouseEventArgs e, PictureBox image)
         {
             SingularityType type = SingularityType.None;
@@ -109,7 +160,7 @@ namespace WinFormFingerprintLabelMarker.services
 
                 Dictionary<SingularityType, List<GroundTruth>> images = FileUtils.buildImageData(map);
 
-                FileUtils.saveImages(images, folderBrowser.SelectedPath, "format");
+                FileUtils.saveImages(images, folderBrowser.SelectedPath, "bmp");
 
                 map.Clear();
 

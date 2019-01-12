@@ -33,9 +33,6 @@ namespace WinFormFingerprintLabelMarker
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBoxImageNames = new System.Windows.Forms.ListBox();
             this.buttonNext = new System.Windows.Forms.Button();
@@ -45,8 +42,6 @@ namespace WinFormFingerprintLabelMarker
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.pictureBoxImage = new System.Windows.Forms.PictureBox();
-            this.pictureBoxPreviewedImage = new System.Windows.Forms.PictureBox();
             this.labelPreviewedImage = new System.Windows.Forms.Label();
             this.labelUpperLeftPoint = new System.Windows.Forms.Label();
             this.groupBoxLabelInfo = new System.Windows.Forms.GroupBox();
@@ -54,11 +49,17 @@ namespace WinFormFingerprintLabelMarker
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelBottomRightPoint = new System.Windows.Forms.Label();
+            this.pictureBoxPreviewedImage = new System.Windows.Forms.PictureBox();
+            this.pictureBoxImage = new System.Windows.Forms.PictureBox();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreviewedImage)).BeginInit();
             this.groupBoxLabelInfo.SuspendLayout();
             this.groupBoxMousePositionInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreviewedImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -82,29 +83,6 @@ namespace WinFormFingerprintLabelMarker
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("loadToolStripMenuItem.Image")));
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadToolStripMenuItem.Text = "Load dataset";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
-            // 
-            // saveGroundTruthToolStripMenuItem
-            // 
-            this.saveGroundTruthToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveGroundTruthToolStripMenuItem.Image")));
-            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
-            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
-            this.saveGroundTruthToolStripMenuItem.Click += new System.EventHandler(this.saveGroundTruthToolStripMenuItem_Click);
-            // 
-            // loadCheckpointFileToolStripMenuItem
-            // 
-            this.loadCheckpointFileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("loadCheckpointFileToolStripMenuItem.Image")));
-            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
-            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
             // 
             // settingsToolStripMenuItem
             // 
@@ -189,34 +167,6 @@ namespace WinFormFingerprintLabelMarker
             this.label3.TabIndex = 9;
             this.label3.Text = "Neg";
             // 
-            // pictureBoxImage
-            // 
-            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBoxImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxImage.InitialImage")));
-            this.pictureBoxImage.Location = new System.Drawing.Point(393, 55);
-            this.pictureBoxImage.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBoxImage.Name = "pictureBoxImage";
-            this.pictureBoxImage.Size = new System.Drawing.Size(437, 500);
-            this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxImage.TabIndex = 10;
-            this.pictureBoxImage.TabStop = false;
-            this.pictureBoxImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseClick);
-            this.pictureBoxImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseMove);
-            // 
-            // pictureBoxPreviewedImage
-            // 
-            this.pictureBoxPreviewedImage.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBoxPreviewedImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxPreviewedImage.Location = new System.Drawing.Point(227, 294);
-            this.pictureBoxPreviewedImage.Name = "pictureBoxPreviewedImage";
-            this.pictureBoxPreviewedImage.Size = new System.Drawing.Size(100, 100);
-            this.pictureBoxPreviewedImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPreviewedImage.TabIndex = 11;
-            this.pictureBoxPreviewedImage.TabStop = false;
-            // 
             // labelPreviewedImage
             // 
             this.labelPreviewedImage.AutoSize = true;
@@ -282,6 +232,63 @@ namespace WinFormFingerprintLabelMarker
             this.labelBottomRightPoint.Size = new System.Drawing.Size(0, 13);
             this.labelBottomRightPoint.TabIndex = 16;
             // 
+            // pictureBoxPreviewedImage
+            // 
+            this.pictureBoxPreviewedImage.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBoxPreviewedImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxPreviewedImage.Location = new System.Drawing.Point(227, 294);
+            this.pictureBoxPreviewedImage.Name = "pictureBoxPreviewedImage";
+            this.pictureBoxPreviewedImage.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxPreviewedImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPreviewedImage.TabIndex = 11;
+            this.pictureBoxPreviewedImage.TabStop = false;
+            // 
+            // pictureBoxImage
+            // 
+            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBoxImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxImage.InitialImage")));
+            this.pictureBoxImage.Location = new System.Drawing.Point(393, 55);
+            this.pictureBoxImage.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBoxImage.Name = "pictureBoxImage";
+            this.pictureBoxImage.Size = new System.Drawing.Size(437, 500);
+            this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxImage.TabIndex = 10;
+            this.pictureBoxImage.TabStop = false;
+            this.pictureBoxImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseClick);
+            this.pictureBoxImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseMove);
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_documents_folder_filled_52;
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadToolStripMenuItem.Text = "Load dataset";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // saveGroundTruthToolStripMenuItem
+            // 
+            this.saveGroundTruthToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_save_52;
+            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
+            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
+            this.saveGroundTruthToolStripMenuItem.Click += new System.EventHandler(this.saveGroundTruthToolStripMenuItem_Click);
+            // 
+            // loadCheckpointFileToolStripMenuItem
+            // 
+            this.loadCheckpointFileToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_txt_52;
+            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
+            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
+            this.loadCheckpointFileToolStripMenuItem.Click += new System.EventHandler(this.loadCheckpointFileToolStripMenuItem_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Title = "Choose the checkpoint file";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,12 +318,12 @@ namespace WinFormFingerprintLabelMarker
             this.Text = "Fingerprint Label Marker";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreviewedImage)).EndInit();
             this.groupBoxLabelInfo.ResumeLayout(false);
             this.groupBoxLabelInfo.PerformLayout();
             this.groupBoxMousePositionInfo.ResumeLayout(false);
             this.groupBoxMousePositionInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreviewedImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,6 +354,7 @@ namespace WinFormFingerprintLabelMarker
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelBottomRightPoint;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 
