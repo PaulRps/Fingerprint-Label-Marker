@@ -64,7 +64,7 @@ namespace WinFormFingerprintLabelMarker
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.MenuBar;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.settingsToolStripMenuItem});
@@ -92,7 +92,7 @@ namespace WinFormFingerprintLabelMarker
             // 
             // listBoxImageNames
             // 
-            this.listBoxImageNames.BackColor = System.Drawing.SystemColors.Control;
+            this.listBoxImageNames.BackColor = System.Drawing.Color.White;
             this.listBoxImageNames.FormattingEnabled = true;
             this.listBoxImageNames.Location = new System.Drawing.Point(29, 54);
             this.listBoxImageNames.Name = "listBoxImageNames";
@@ -234,7 +234,7 @@ namespace WinFormFingerprintLabelMarker
             // 
             // pictureBoxPreviewedImage
             // 
-            this.pictureBoxPreviewedImage.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBoxPreviewedImage.BackColor = System.Drawing.Color.White;
             this.pictureBoxPreviewedImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxPreviewedImage.Location = new System.Drawing.Point(227, 294);
             this.pictureBoxPreviewedImage.Name = "pictureBoxPreviewedImage";
@@ -245,11 +245,11 @@ namespace WinFormFingerprintLabelMarker
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBoxImage.BackColor = System.Drawing.Color.White;
             this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxImage.InitialImage")));
+            this.pictureBoxImage.InitialImage = null;
             this.pictureBoxImage.Location = new System.Drawing.Point(393, 55);
             this.pictureBoxImage.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBoxImage.Name = "pictureBoxImage";
@@ -294,7 +294,7 @@ namespace WinFormFingerprintLabelMarker
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(911, 579);
             this.Controls.Add(this.labelBottomRightPoint);
             this.Controls.Add(this.labelUpperLeftPoint);
