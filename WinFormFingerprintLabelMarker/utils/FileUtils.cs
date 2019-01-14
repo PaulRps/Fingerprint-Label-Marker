@@ -37,6 +37,11 @@ namespace WinFormFingerprintLabelMarker.utils
             
         }
 
+        public static void prepareFolder(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
+
         public static void saveImages(Dictionary<SingularityType, List<GroundTruth>> images, string path, string format)
         {
             string folder = null;
@@ -49,18 +54,23 @@ namespace WinFormFingerprintLabelMarker.utils
                     {
                         folder = Path.Combine(path, image.Key.ToString());
 
-                        Directory.CreateDirectory(folder);
+                        FileUtils.prepareFolder(folder);
+                        string s = string.Format("{0}_{1}_{2}_{3}.{4}", g._imageName.Split('.')[0], image.Key.ToString(), g._sing._x, g._sing._y, format);
+                        folder = Path.Combine(folder, s);
 
-                        folder = Path.Combine(folder, string.Format("{0}_{1}.{2}", g._imageName.Split('.')[0], image.Key.ToString()), format);
+                        if (!File.Exists(folder))
+                        {
+                            g._sing._image.Save(folder, ImageFormat.Bmp);
 
-                        g._sing._image.Save(folder, ImageFormat.Bmp);
+                        }
+                        
 
                     }
                 }
             }
             catch (Exception e)
             {
-                throw e;
+                System.Windows.Forms.MessageBox.Show(e.Message);
             }
         }
 

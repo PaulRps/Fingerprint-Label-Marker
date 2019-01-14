@@ -34,6 +34,11 @@ namespace WinFormFingerprintLabelMarker.services
             return null;
         }
 
+        public string getDatasetName(string path)
+        {
+            string[] folders = path.Split(Path.DirectorySeparatorChar);
+            return folders[folders.Length - 1];
+        }
 
         public string loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
         {
@@ -43,40 +48,51 @@ namespace WinFormFingerprintLabelMarker.services
             {   
                 string [] data = File.ReadAllLines(openFile.FileName);
                 string[] txt = null;
-                List<Singularity> list = new List<Singularity>();
+                List<GroundTruth> list = new List<GroundTruth>();
+                GroundTruth gt = new GroundTruth();
+                Dictionary<String, List<GroundTruth>> dd = new Dictionary<string, List<GroundTruth>>();
 
-                for(int i = data.Length-1; i >= 0; i--)
+                for (int i = 0; i < data.Length; i++)
                 {
+                    if (data[i].CompareTo("") == 0)
+                        continue;
+
                     txt = data[i].Split(FileUtils._token);
-             
+
                     if (txt.Length == 1 && txt[0].CompareTo("") != 0)
                     {
-                        result = txt[0].Trim();             
-                        break;
+                        result = txt[0].Trim();
 
-                    } else if (txt[0].CompareTo("") != 0)
-                    {
-                        Singularity sing = new Singularity();
-                        sing._x = int.Parse(txt[0]);
-                        sing._y = int.Parse(txt[1]);
-                        sing._type = Singularity.stringToSingType(txt[2].Trim());
-                        list.Add(sing);
-                        
-                    }
+                        i++;
+
+                        while (i < data.Length && data[i].CompareTo("") != 0)
+                        {                            
+                            txt = data[i].Split(FileUtils._token);
+                            
+                            //TODO: restaurar sig.img
+
+                            gt._sing._x = int.Parse(txt[0]);
+                            gt._sing._y = int.Parse(txt[1]);
+                            gt._sing._type = Singularity.stringToSingType(txt[2].Trim());
+                            addGroundTruth(dd, result, gt);
+
+                            i++;
+                        }
+                    } 
                 }
 
-                foreach (Singularity s in list)
-                {
-                    if (image.Image == null)
-                    {
-                        image.Image = new Bitmap(path + Path.DirectorySeparatorChar + result);
-                        storeCurrentImage(image.Image);
-                        image.Width = image.Image.Width;
-                        image.Height = image.Image.Height;
-                    }
+                //foreach (Singularity s in list)
+                //{
+                //    if (image.Image == null)
+                //    {
+                //        image.Image = new Bitmap(path + Path.DirectorySeparatorChar + result);
+                //        storeCurrentImage(image.Image);
+                //        image.Width = image.Image.Width;
+                //        image.Height = image.Image.Height;
+                //    }
 
-                    markArea(image, s);
-                }
+                //    markArea(image, s);
+                //}
 
             }
 
@@ -105,7 +121,7 @@ namespace WinFormFingerprintLabelMarker.services
 
             return sing;
         }
-
+               
         public void computeMousePosition(MouseEventArgs e, Label lb1, Label lb2)
         {
             lb1.Text = string.Format("({0},{1})", e.X, e.Y);
@@ -156,11 +172,15 @@ namespace WinFormFingerprintLabelMarker.services
 
                 List<string> data = FileUtils.buildTextData(map);
 
-                FileUtils.writeTxtFile(data, datasetName, folderBrowser.SelectedPath);
+                string path = Path.Combine(folderBrowser.SelectedPath, datasetName);
+
+                FileUtils.prepareFolder(path);
+
+                FileUtils.writeTxtFile(data, datasetName, path);
 
                 Dictionary<SingularityType, List<GroundTruth>> images = FileUtils.buildImageData(map);
 
-                FileUtils.saveImages(images, folderBrowser.SelectedPath, "bmp");
+                FileUtils.saveImages(images, path, "bmp");
 
                 map.Clear();
 
@@ -168,7 +188,7 @@ namespace WinFormFingerprintLabelMarker.services
 
         }
 
-        private Image markArea(PictureBox image, Singularity sing)
+        public Image markArea(PictureBox image, Singularity sing)
         {
             try
             {                                

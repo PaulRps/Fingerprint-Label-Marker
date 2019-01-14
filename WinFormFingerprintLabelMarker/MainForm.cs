@@ -41,9 +41,8 @@ namespace WinFormFingerprintLabelMarker
             if (files != null)
             {
                 listBoxImageNames.DataSource = files;
-                _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";
-                string [] folders =_folderPath.Split(Path.DirectorySeparatorChar);
-                _datasetName = folders[folders.Length-1];
+                _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
+                _datasetName = _menuService.getDatasetName(_folderPath);
             }
         }
 
@@ -55,6 +54,15 @@ namespace WinFormFingerprintLabelMarker
                 _menuService.storeCurrentImage(pictureBoxImage.Image);
                 pictureBoxImage.Width = pictureBoxImage.Image.Width;
                 pictureBoxImage.Height = pictureBoxImage.Image.Height;
+
+                List<GroundTruth> l;
+                if (_groundTruth.TryGetValue(listBoxImageNames.SelectedItem.ToString(), out l))
+                {                    
+                    foreach (GroundTruth g in l)
+                    {
+                        g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                    }
+                }
             }
         }
                 
