@@ -48,7 +48,7 @@ namespace WinFormFingerprintLabelMarker
 
         private void listBoxImageNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxImageNames.SelectedItem.ToString() != null && _folderPath != null)
+            if (listBoxImageNames.SelectedItem != null && listBoxImageNames.SelectedItem.ToString() != null && _folderPath != null)
             {
                 pictureBoxImage.Image = new Bitmap(_folderPath + Path.DirectorySeparatorChar + listBoxImageNames.SelectedItem.ToString());
                 _menuService.storeCurrentImage(pictureBoxImage.Image);
@@ -125,6 +125,8 @@ namespace WinFormFingerprintLabelMarker
             if (_groundTruth != null && _groundTruth.Count > 0)
             {
                 _menuService.saveGroundTruth(folderBrowser, _groundTruth, _datasetName);
+
+                MessageBox.Show(string.Format("Ground truth saved in {0}", _datasetName));
             }
         }
 
@@ -134,17 +136,13 @@ namespace WinFormFingerprintLabelMarker
 
             if (_folderPath != null)
             {
-                imgName = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
+                _groundTruth = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
             }
 
-            if (imgName == null || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
+            if (_groundTruth.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
             {
                 MessageBox.Show("Load the dataset to continue marking!");
-
-            } else
-            {
-                listBoxImageNames.SelectedItem = imgName;
-            }
+            } 
         }
     }
 }

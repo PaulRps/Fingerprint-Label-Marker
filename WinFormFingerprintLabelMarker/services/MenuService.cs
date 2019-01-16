@@ -40,63 +40,18 @@ namespace WinFormFingerprintLabelMarker.services
             return folders[folders.Length - 1];
         }
 
-        public string loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
+        public Dictionary<String, List<GroundTruth>> loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
         {
             string result = null;
-
+            Dictionary<String, List<GroundTruth>> dd = null;
             if (openFile.ShowDialog() == DialogResult.OK)
-            {   
-                string [] data = File.ReadAllLines(openFile.FileName);
-                string[] txt = null;
-                List<GroundTruth> list = new List<GroundTruth>();
-                GroundTruth gt = new GroundTruth();
-                Dictionary<String, List<GroundTruth>> dd = new Dictionary<string, List<GroundTruth>>();
+            {
 
-                for (int i = 0; i < data.Length; i++)
-                {
-                    if (data[i].CompareTo("") == 0)
-                        continue;
-
-                    txt = data[i].Split(FileUtils._token);
-
-                    if (txt.Length == 1 && txt[0].CompareTo("") != 0)
-                    {
-                        result = txt[0].Trim();
-
-                        i++;
-
-                        while (i < data.Length && data[i].CompareTo("") != 0)
-                        {                            
-                            txt = data[i].Split(FileUtils._token);
-                            
-                            //TODO: restaurar sig.img
-
-                            gt._sing._x = int.Parse(txt[0]);
-                            gt._sing._y = int.Parse(txt[1]);
-                            gt._sing._type = Singularity.stringToSingType(txt[2].Trim());
-                            addGroundTruth(dd, result, gt);
-
-                            i++;
-                        }
-                    } 
-                }
-
-                //foreach (Singularity s in list)
-                //{
-                //    if (image.Image == null)
-                //    {
-                //        image.Image = new Bitmap(path + Path.DirectorySeparatorChar + result);
-                //        storeCurrentImage(image.Image);
-                //        image.Width = image.Image.Width;
-                //        image.Height = image.Image.Height;
-                //    }
-
-                //    markArea(image, s);
-                //}
+                dd = FileUtils.buildDataFromFile(openFile.FileName, path);
 
             }
 
-            return result;
+            return dd;
         }
         
         public Singularity markLabel(MouseEventArgs e, PictureBox image)

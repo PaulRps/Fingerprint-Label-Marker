@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormFingerprintLabelMarker.model;
+using WinFormFingerprintLabelMarker.services;
 
 namespace WinFormFingerprintLabelMarker.utils
 {
@@ -24,17 +25,18 @@ namespace WinFormFingerprintLabelMarker.utils
             if (File.Exists(filePath))
             {
 
-                File.AppendAllLines(filePath, data);
+                File.Delete(filePath);
 
-            } else
+            }
+            else
             {
                 using (StreamWriter outputFile = new StreamWriter(filePath))
                 {
                     foreach (string line in data)
                         outputFile.WriteLine(line);
                 }
-            }            
-            
+            }
+
         }
 
         public static void prepareFolder(string path)
@@ -63,7 +65,7 @@ namespace WinFormFingerprintLabelMarker.utils
                             g._sing._image.Save(folder, ImageFormat.Bmp);
 
                         }
-                        
+
 
                     }
                 }
@@ -93,16 +95,16 @@ namespace WinFormFingerprintLabelMarker.utils
                 }
 
                 data.Add(string.Format("{0}{1}{2}", headerData, Environment.NewLine, bodyData.ToString()));
-                
+
             }
 
             return data;
         }
-                
-        public static Dictionary<SingularityType,List<GroundTruth>> buildImageData(Dictionary<String, List<GroundTruth>> map)
+
+        public static Dictionary<SingularityType, List<GroundTruth>> buildImageData(Dictionary<String, List<GroundTruth>> map)
         {
             Dictionary<SingularityType, List<GroundTruth>> data = new Dictionary<SingularityType, List<GroundTruth>>();
-            
+
             List<GroundTruth> l;
             foreach (var item in map)
             {
@@ -111,7 +113,7 @@ namespace WinFormFingerprintLabelMarker.utils
                     if (!data.TryGetValue(g._sing._type, out l))
                     {
                         l = new List<GroundTruth>();
-                        data.Add(g._sing._type, l);                        
+                        data.Add(g._sing._type, l);
                     }
 
                     l.Add(g);
@@ -120,6 +122,68 @@ namespace WinFormFingerprintLabelMarker.utils
             }
 
             return data;
+        }
+
+        public static Dictionary<String, List<GroundTruth>> buildDataFromFile(string pathFile, string pathDataset)
+        {
+            string[] data = File.ReadAllLines(pathFile);
+            string[] txt = null;
+            string imgName = null;
+            string dbName = new DirectoryInfo(pathDataset).Name;
+            GroundTruth gt = null;
+            Dictionary<String, List<GroundTruth>> groundTruth = new Dictionary<string, List<GroundTruth>>();
+
+            MenuService menuService = new MenuService();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i].CompareTo("") == 0)
+                    continue;
+
+                txt = data[i].Split(FileUtils._token);
+
+                if (txt.Length == 1)
+                {
+                    imgName = txt[0].Trim();
+                    
+
+                    i++;
+
+                    while (i < data.Length && data[i].CompareTo("") != 0)
+                    {
+                        txt = data[i].Split(FileUtils._token);
+                        gt = new GroundTruth();
+
+                        gt._sing._x = int.Parse(txt[0]);
+                        gt._sing._y = int.Parse(txt[1]);
+                        gt._sing._type = Singularity.stringToSingType(txt[2].Trim());
+                        gt._datasetName = dbName;
+                        gt._imageName = imgName;
+                        
+                                                
+                        string[] file = imgName.Split('.');
+                        string rectImgName = string.Format("{0}_{1}_{2}_{3}.{4}", file[0], gt._sing._type.ToString(), gt._sing._x, gt._sing._y, file[1]);
+                        string p = Path.Combine(pathDataset, gt._sing._type.ToString(), rectImgName);
+                        if (File.Exists(p))
+                        {
+                            gt._sing._image = new Bitmap(p);
+
+                        } else
+                        {
+                            p = p = Path.Combine(pathDataset, imgName);
+                            Bitmap b = new Bitmap(p);
+                            Rectangle rect = GraphicsUtils.getRectFromSing(gt._sing, b.Width, b.Height);
+                            gt._sing._image = b.Clone(rect, b.PixelFormat);
+                        }
+
+                        menuService.addGroundTruth(groundTruth, imgName, gt);
+
+                        i++;
+                    }
+                }
+            }
+
+            return groundTruth;
         }
     }
 }
