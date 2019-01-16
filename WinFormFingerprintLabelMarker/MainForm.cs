@@ -41,20 +41,28 @@ namespace WinFormFingerprintLabelMarker
             if (files != null)
             {
                 listBoxImageNames.DataSource = files;
-                _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";
-                string [] folders =_folderPath.Split(Path.DirectorySeparatorChar);
-                _datasetName = folders[folders.Length-1];
+                _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
+                _datasetName = _menuService.getDatasetName(_folderPath);
             }
         }
 
         private void listBoxImageNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxImageNames.SelectedItem.ToString() != null && _folderPath != null)
+            if (listBoxImageNames.SelectedItem != null && listBoxImageNames.SelectedItem.ToString() != null && _folderPath != null)
             {
                 pictureBoxImage.Image = new Bitmap(_folderPath + Path.DirectorySeparatorChar + listBoxImageNames.SelectedItem.ToString());
                 _menuService.storeCurrentImage(pictureBoxImage.Image);
                 pictureBoxImage.Width = pictureBoxImage.Image.Width;
                 pictureBoxImage.Height = pictureBoxImage.Image.Height;
+
+                List<GroundTruth> l;
+                if (_groundTruth.TryGetValue(listBoxImageNames.SelectedItem.ToString(), out l))
+                {                    
+                    foreach (GroundTruth g in l)
+                    {
+                        g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                    }
+                }
             }
         }
                 
@@ -117,6 +125,8 @@ namespace WinFormFingerprintLabelMarker
             if (_groundTruth != null && _groundTruth.Count > 0)
             {
                 _menuService.saveGroundTruth(folderBrowser, _groundTruth, _datasetName);
+
+                MessageBox.Show(string.Format("Ground truth saved in {0}", _datasetName));
             }
         }
 
@@ -126,17 +136,13 @@ namespace WinFormFingerprintLabelMarker
 
             if (_folderPath != null)
             {
-                imgName = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
+                _groundTruth = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
             }
 
-            if (imgName == null || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
+            if (_groundTruth.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
             {
                 MessageBox.Show("Load the dataset to continue marking!");
-
-            } else
-            {
-                listBoxImageNames.SelectedItem = imgName;
-            }
+            } 
         }
     }
 }

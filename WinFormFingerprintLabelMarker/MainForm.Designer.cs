@@ -33,6 +33,9 @@ namespace WinFormFingerprintLabelMarker
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBoxImageNames = new System.Windows.Forms.ListBox();
             this.buttonNext = new System.Windows.Forms.Button();
@@ -51,9 +54,6 @@ namespace WinFormFingerprintLabelMarker
             this.labelBottomRightPoint = new System.Windows.Forms.Label();
             this.pictureBoxPreviewedImage = new System.Windows.Forms.PictureBox();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGroundTruthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadCheckpointFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.groupBoxLabelInfo.SuspendLayout();
@@ -83,6 +83,30 @@ namespace WinFormFingerprintLabelMarker
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_documents_folder_filled_52;
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadToolStripMenuItem.Text = "Load dataset";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // saveGroundTruthToolStripMenuItem
+            // 
+            this.saveGroundTruthToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_save_52;
+            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
+            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
+            this.saveGroundTruthToolStripMenuItem.Click += new System.EventHandler(this.saveGroundTruthToolStripMenuItem_Click);
+            // 
+            // loadCheckpointFileToolStripMenuItem
+            // 
+            this.loadCheckpointFileToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_txt_52;
+            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
+            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
+            this.loadCheckpointFileToolStripMenuItem.Click += new System.EventHandler(this.loadCheckpointFileToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -172,9 +196,9 @@ namespace WinFormFingerprintLabelMarker
             this.labelPreviewedImage.AutoSize = true;
             this.labelPreviewedImage.Location = new System.Drawing.Point(227, 278);
             this.labelPreviewedImage.Name = "labelPreviewedImage";
-            this.labelPreviewedImage.Size = new System.Drawing.Size(74, 13);
+            this.labelPreviewedImage.Size = new System.Drawing.Size(70, 13);
             this.labelPreviewedImage.TabIndex = 12;
-            this.labelPreviewedImage.Text = "Selected Area";
+            this.labelPreviewedImage.Text = "Selected Box";
             // 
             // labelUpperLeftPoint
             // 
@@ -204,7 +228,7 @@ namespace WinFormFingerprintLabelMarker
             this.groupBoxMousePositionInfo.Size = new System.Drawing.Size(200, 100);
             this.groupBoxMousePositionInfo.TabIndex = 15;
             this.groupBoxMousePositionInfo.TabStop = false;
-            this.groupBoxMousePositionInfo.Text = "Mouse Position Info";
+            this.groupBoxMousePositionInfo.Text = "Box Position Info";
             // 
             // label5
             // 
@@ -259,30 +283,6 @@ namespace WinFormFingerprintLabelMarker
             this.pictureBoxImage.TabStop = false;
             this.pictureBoxImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseClick);
             this.pictureBoxImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxImage_MouseMove);
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_documents_folder_filled_52;
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadToolStripMenuItem.Text = "Load dataset";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
-            // 
-            // saveGroundTruthToolStripMenuItem
-            // 
-            this.saveGroundTruthToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_save_52;
-            this.saveGroundTruthToolStripMenuItem.Name = "saveGroundTruthToolStripMenuItem";
-            this.saveGroundTruthToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.saveGroundTruthToolStripMenuItem.Text = "Save Ground Truth";
-            this.saveGroundTruthToolStripMenuItem.Click += new System.EventHandler(this.saveGroundTruthToolStripMenuItem_Click);
-            // 
-            // loadCheckpointFileToolStripMenuItem
-            // 
-            this.loadCheckpointFileToolStripMenuItem.Image = global::WinFormFingerprintLabelMarker.Properties.Resources.icons8_txt_52;
-            this.loadCheckpointFileToolStripMenuItem.Name = "loadCheckpointFileToolStripMenuItem";
-            this.loadCheckpointFileToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadCheckpointFileToolStripMenuItem.Text = "Load Checkpoint File";
-            this.loadCheckpointFileToolStripMenuItem.Click += new System.EventHandler(this.loadCheckpointFileToolStripMenuItem_Click);
             // 
             // openFileDialog
             // 
