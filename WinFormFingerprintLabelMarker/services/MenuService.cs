@@ -117,7 +117,11 @@ namespace WinFormFingerprintLabelMarker.services
 
         public void removeLastSingularity(Dictionary<String, List<GroundTruth>> map, string nameImage)
         {
-            map[nameImage].RemoveAt(map[nameImage].Count - 1);
+            List<GroundTruth> l;
+            if (map.TryGetValue(nameImage, out l))
+            {                
+                map[nameImage].RemoveAt(map[nameImage].Count - 1);
+            }
         }
 
         public void saveGroundTruth(FolderBrowserDialog folderBrowser, Dictionary<String, List<GroundTruth>> map, string datasetName)

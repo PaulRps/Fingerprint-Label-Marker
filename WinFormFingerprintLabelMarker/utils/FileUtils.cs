@@ -28,14 +28,13 @@ namespace WinFormFingerprintLabelMarker.utils
                 File.Delete(filePath);
 
             }
-            else
+
+            using (StreamWriter outputFile = new StreamWriter(filePath))
             {
-                using (StreamWriter outputFile = new StreamWriter(filePath))
-                {
-                    foreach (string line in data)
-                        outputFile.WriteLine(line);
-                }
+                foreach (string line in data)
+                    outputFile.WriteLine(line);
             }
+
 
         }
 
@@ -145,7 +144,7 @@ namespace WinFormFingerprintLabelMarker.utils
                 if (txt.Length == 1)
                 {
                     imgName = txt[0].Trim();
-                    
+
 
                     i++;
 
@@ -159,8 +158,8 @@ namespace WinFormFingerprintLabelMarker.utils
                         gt._sing._type = Singularity.stringToSingType(txt[2].Trim());
                         gt._datasetName = dbName;
                         gt._imageName = imgName;
-                        
-                                                
+
+
                         string[] file = imgName.Split('.');
                         string rectImgName = string.Format("{0}_{1}_{2}_{3}.{4}", file[0], gt._sing._type.ToString(), gt._sing._x, gt._sing._y, file[1]);
                         string p = Path.Combine(pathDataset, gt._sing._type.ToString(), rectImgName);
@@ -168,7 +167,8 @@ namespace WinFormFingerprintLabelMarker.utils
                         {
                             gt._sing._image = new Bitmap(p);
 
-                        } else
+                        }
+                        else
                         {
                             p = p = Path.Combine(pathDataset, imgName);
                             Bitmap b = new Bitmap(p);

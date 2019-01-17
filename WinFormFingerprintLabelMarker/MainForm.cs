@@ -40,9 +40,9 @@ namespace WinFormFingerprintLabelMarker
             
             if (files != null)
             {
-                listBoxImageNames.DataSource = files;
                 _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
                 _datasetName = _menuService.getDatasetName(_folderPath);
+                listBoxImageNames.DataSource = files;
             }
         }
 

@@ -21,7 +21,7 @@ namespace WinFormFingerprintLabelMarker.utils
         private GraphicsUtils()
         {
             _bluePen = new Pen(Color.Blue, 3);
-            _greenPen = new Pen(Color.LightBlue, 3);
+            _greenPen = new Pen(Color.Lime, 3);
             _redPen = new Pen(Color.Crimson, 3);            
         }
 
