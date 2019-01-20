@@ -36,8 +36,8 @@ namespace WinFormFingerprintLabelMarker
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           string [] files = _menuService.loadDataset(folderBrowser);
-            
+            string[] files = _menuService.loadDataset(folderBrowser);
+
             if (files != null)
             {
                 _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
@@ -57,24 +57,30 @@ namespace WinFormFingerprintLabelMarker
 
                 List<GroundTruth> l;
                 if (_groundTruth.TryGetValue(listBoxImageNames.SelectedItem.ToString(), out l))
-                {                    
-                    foreach (GroundTruth g in l)
+                {
+                    try
                     {
-                        g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                        foreach (GroundTruth g in l)
+                        {
+                            g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
         }
-                
+
 
         private void pictureBoxImage_MouseClick(object sender, MouseEventArgs e)
         {
-            _lastImage = pictureBoxImage.Image;
-
-            Singularity sing = _menuService.markLabel(e, pictureBoxImage);
-
             try
             {
+                _lastImage = pictureBoxImage.Image; 
+
+                Singularity sing = _menuService.markLabel(e, pictureBoxImage);
 
                 _menuService.addGroundTruth(_groundTruth, listBoxImageNames.SelectedItem.ToString(), new GroundTruth(listBoxImageNames.SelectedItem.ToString(), _datasetName, sing));
 
@@ -82,8 +88,9 @@ namespace WinFormFingerprintLabelMarker
                 {
                     pictureBoxPreviewedImage.Image = sing._image;
                 }
-                
-            } catch (OutOfMemoryException ex)
+
+            }
+            catch (OutOfMemoryException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -142,7 +149,7 @@ namespace WinFormFingerprintLabelMarker
             if (_groundTruth.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
             {
                 MessageBox.Show("Load the dataset to continue marking!");
-            } 
+            }
         }
     }
 }

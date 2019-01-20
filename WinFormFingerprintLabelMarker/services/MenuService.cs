@@ -53,7 +53,7 @@ namespace WinFormFingerprintLabelMarker.services
 
             return dd;
         }
-        
+
         public Singularity markLabel(MouseEventArgs e, PictureBox image)
         {
             SingularityType type = SingularityType.None;
@@ -76,11 +76,11 @@ namespace WinFormFingerprintLabelMarker.services
 
             return sing;
         }
-               
+
         public void computeMousePosition(MouseEventArgs e, Label lb1, Label lb2)
         {
             lb1.Text = string.Format("({0},{1})", e.X, e.Y);
-            lb2.Text = string.Format("({0},{1})", e.X + GraphicsUtils.offset, e.Y + GraphicsUtils.offset);            
+            lb2.Text = string.Format("({0},{1})", e.X + GraphicsUtils.offset, e.Y + GraphicsUtils.offset);
         }
 
         public void storeCurrentImage(Image img)
@@ -107,11 +107,11 @@ namespace WinFormFingerprintLabelMarker.services
         public void addGroundTruth(Dictionary<String, List<GroundTruth>> map, string nameImage, GroundTruth g)
         {
             List<GroundTruth> l;
-            if(!map.TryGetValue(nameImage, out l))
+            if (!map.TryGetValue(nameImage, out l))
             {
                 map.Add(nameImage, new List<GroundTruth>());
             }
-                        
+
             map[nameImage].Add(g);
         }
 
@@ -119,7 +119,7 @@ namespace WinFormFingerprintLabelMarker.services
         {
             List<GroundTruth> l;
             if (map.TryGetValue(nameImage, out l))
-            {                
+            {
                 map[nameImage].RemoveAt(map[nameImage].Count - 1);
             }
         }
@@ -149,16 +149,7 @@ namespace WinFormFingerprintLabelMarker.services
 
         public Image markArea(PictureBox image, Singularity sing)
         {
-            try
-            {                                
-                return GraphicsUtils.drawRectangle(image, sing);
-            }
-            catch (OutOfMemoryException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            return null;
+            return GraphicsUtils.drawRectangle(image, sing);
         }
     }
 }
