@@ -61,19 +61,7 @@ namespace WinFormFingerprintLabelMarker.utils
 
             Bitmap img = new Bitmap(image.Image);
             Graphics graphic = Graphics.FromImage(img);
-
-            //int width = (2 * GraphicsUtils.offset);
-            //int height = (2 * GraphicsUtils.offset);            
-            //int x = Singularity.getValidPoint(img.Width, sing._x - GraphicsUtils.offset);
-            //int y = Singularity.getValidPoint(img.Height, sing._y - GraphicsUtils.offset);
-
-            //if (x+width > img.Width || y + height > img.Height)
-            //{
-
-            //    throw new OutOfMemoryException("The selected area is bigger then image bounds");
-
-            //} 
-
+                        
             Rectangle rect = GraphicsUtils.getRectFromSing(sing, img.Width, img.Height);
 
             graphic.DrawRectangle(GraphicsUtils.getInstance().getPen(sing), rect);
