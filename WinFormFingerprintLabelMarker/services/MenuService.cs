@@ -151,5 +151,29 @@ namespace WinFormFingerprintLabelMarker.services
         {
             return GraphicsUtils.drawRectangle(image, sing);
         }
+
+        public void updateLabelsCount(Dictionary<String, List<GroundTruth>> map, Label core, Label delta, Label neg)
+        {
+            int c = 0;
+            int d = 0;
+            int n = 0;
+
+            foreach (var item in map)
+            {
+                foreach (var g in item.Value)
+                {
+                    if (SingularityType.Core == g._sing._type)
+                        c++;
+                    else if (SingularityType.Delta == g._sing._type)
+                        d++;
+                    else if (SingularityType.Neg == g._sing._type)
+                        n++;
+                }
+            }
+
+            core.Text = c.ToString();
+            delta.Text = d.ToString();
+            neg.Text = n.ToString();
+        }
     }
 }

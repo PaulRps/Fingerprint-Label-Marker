@@ -55,6 +55,11 @@ namespace WinFormFingerprintLabelMarker
             this.pictureBoxPreviewedImage = new System.Windows.Forms.PictureBox();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.labelNegCount = new System.Windows.Forms.Label();
+            this.labelDeltaCount = new System.Windows.Forms.Label();
+            this.labelCoreCount = new System.Windows.Forms.Label();
+            this.labelFilesCount = new System.Windows.Forms.Label();
+            this.labelImageDim = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBoxLabelInfo.SuspendLayout();
             this.groupBoxMousePositionInfo.SuspendLayout();
@@ -128,7 +133,7 @@ namespace WinFormFingerprintLabelMarker
             // buttonNext
             // 
             this.buttonNext.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonNext.Location = new System.Drawing.Point(227, 209);
+            this.buttonNext.Location = new System.Drawing.Point(227, 226);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(100, 23);
             this.buttonNext.TabIndex = 4;
@@ -139,7 +144,7 @@ namespace WinFormFingerprintLabelMarker
             // buttonUndo
             // 
             this.buttonUndo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonUndo.Location = new System.Drawing.Point(227, 168);
+            this.buttonUndo.Location = new System.Drawing.Point(227, 185);
             this.buttonUndo.Name = "buttonUndo";
             this.buttonUndo.Size = new System.Drawing.Size(100, 23);
             this.buttonUndo.TabIndex = 5;
@@ -150,7 +155,7 @@ namespace WinFormFingerprintLabelMarker
             // buttonReset
             // 
             this.buttonReset.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonReset.Location = new System.Drawing.Point(227, 129);
+            this.buttonReset.Location = new System.Drawing.Point(227, 146);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(100, 23);
             this.buttonReset.TabIndex = 6;
@@ -211,10 +216,13 @@ namespace WinFormFingerprintLabelMarker
             // groupBoxLabelInfo
             // 
             this.groupBoxLabelInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBoxLabelInfo.Controls.Add(this.labelCoreCount);
+            this.groupBoxLabelInfo.Controls.Add(this.labelDeltaCount);
+            this.groupBoxLabelInfo.Controls.Add(this.labelNegCount);
             this.groupBoxLabelInfo.Controls.Add(this.label3);
             this.groupBoxLabelInfo.Location = new System.Drawing.Point(177, 51);
             this.groupBoxLabelInfo.Name = "groupBoxLabelInfo";
-            this.groupBoxLabelInfo.Size = new System.Drawing.Size(200, 60);
+            this.groupBoxLabelInfo.Size = new System.Drawing.Size(200, 72);
             this.groupBoxLabelInfo.TabIndex = 14;
             this.groupBoxLabelInfo.TabStop = false;
             this.groupBoxLabelInfo.Text = "Label Info";
@@ -274,7 +282,7 @@ namespace WinFormFingerprintLabelMarker
             this.pictureBoxImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxImage.InitialImage = null;
-            this.pictureBoxImage.Location = new System.Drawing.Point(393, 55);
+            this.pictureBoxImage.Location = new System.Drawing.Point(389, 54);
             this.pictureBoxImage.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(437, 500);
@@ -289,6 +297,48 @@ namespace WinFormFingerprintLabelMarker
             this.openFileDialog.FileName = "openFileDialog";
             this.openFileDialog.Title = "Choose the checkpoint file";
             // 
+            // labelNegCount
+            // 
+            this.labelNegCount.AutoSize = true;
+            this.labelNegCount.Location = new System.Drawing.Point(151, 53);
+            this.labelNegCount.Name = "labelNegCount";
+            this.labelNegCount.Size = new System.Drawing.Size(0, 13);
+            this.labelNegCount.TabIndex = 10;
+            // 
+            // labelDeltaCount
+            // 
+            this.labelDeltaCount.AutoSize = true;
+            this.labelDeltaCount.Location = new System.Drawing.Point(83, 53);
+            this.labelDeltaCount.Name = "labelDeltaCount";
+            this.labelDeltaCount.Size = new System.Drawing.Size(0, 13);
+            this.labelDeltaCount.TabIndex = 11;
+            // 
+            // labelCoreCount
+            // 
+            this.labelCoreCount.AutoSize = true;
+            this.labelCoreCount.Location = new System.Drawing.Point(23, 53);
+            this.labelCoreCount.Name = "labelCoreCount";
+            this.labelCoreCount.Size = new System.Drawing.Size(0, 13);
+            this.labelCoreCount.TabIndex = 12;
+            // 
+            // labelFilesCount
+            // 
+            this.labelFilesCount.AutoSize = true;
+            this.labelFilesCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFilesCount.Location = new System.Drawing.Point(27, 42);
+            this.labelFilesCount.Name = "labelFilesCount";
+            this.labelFilesCount.Size = new System.Drawing.Size(0, 12);
+            this.labelFilesCount.TabIndex = 17;
+            // 
+            // labelImageDim
+            // 
+            this.labelImageDim.AutoSize = true;
+            this.labelImageDim.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelImageDim.Location = new System.Drawing.Point(387, 42);
+            this.labelImageDim.Name = "labelImageDim";
+            this.labelImageDim.Size = new System.Drawing.Size(0, 12);
+            this.labelImageDim.TabIndex = 18;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +346,8 @@ namespace WinFormFingerprintLabelMarker
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(911, 579);
+            this.Controls.Add(this.labelImageDim);
+            this.Controls.Add(this.labelFilesCount);
             this.Controls.Add(this.labelBottomRightPoint);
             this.Controls.Add(this.labelUpperLeftPoint);
             this.Controls.Add(this.labelPreviewedImage);
@@ -355,6 +407,11 @@ namespace WinFormFingerprintLabelMarker
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelBottomRightPoint;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Label labelCoreCount;
+        private System.Windows.Forms.Label labelDeltaCount;
+        private System.Windows.Forms.Label labelNegCount;
+        private System.Windows.Forms.Label labelFilesCount;
+        private System.Windows.Forms.Label labelImageDim;
     }
 }
 
