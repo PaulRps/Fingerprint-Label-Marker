@@ -36,13 +36,14 @@ namespace WinFormFingerprintLabelMarker
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           string [] files = _menuService.loadDataset(folderBrowser);
-            
+            string[] files = _menuService.loadDataset(folderBrowser);
+
             if (files != null)
             {
-                listBoxImageNames.DataSource = files;
                 _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
                 _datasetName = _menuService.getDatasetName(_folderPath);
+                listBoxImageNames.DataSource = files;
+                labelFilesCount.Text = string.Format("Files: {0}", files.Length);
             }
         }
 
@@ -54,27 +55,34 @@ namespace WinFormFingerprintLabelMarker
                 _menuService.storeCurrentImage(pictureBoxImage.Image);
                 pictureBoxImage.Width = pictureBoxImage.Image.Width;
                 pictureBoxImage.Height = pictureBoxImage.Image.Height;
+                labelImageDim.Text = string.Format("W x H : {0} x {1}", pictureBoxImage.Width, pictureBoxImage.Height);
 
                 List<GroundTruth> l;
                 if (_groundTruth.TryGetValue(listBoxImageNames.SelectedItem.ToString(), out l))
-                {                    
-                    foreach (GroundTruth g in l)
+                {
+                    try
                     {
-                        g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                        foreach (GroundTruth g in l)
+                        {
+                            g._sing._image = _menuService.markArea(pictureBoxImage, g._sing);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
         }
-                
+
 
         private void pictureBoxImage_MouseClick(object sender, MouseEventArgs e)
         {
-            _lastImage = pictureBoxImage.Image;
-
-            Singularity sing = _menuService.markLabel(e, pictureBoxImage);
-
             try
             {
+                _lastImage = pictureBoxImage.Image; 
+
+                Singularity sing = _menuService.markLabel(e, pictureBoxImage);
 
                 _menuService.addGroundTruth(_groundTruth, listBoxImageNames.SelectedItem.ToString(), new GroundTruth(listBoxImageNames.SelectedItem.ToString(), _datasetName, sing));
 
@@ -82,10 +90,14 @@ namespace WinFormFingerprintLabelMarker
                 {
                     pictureBoxPreviewedImage.Image = sing._image;
                 }
-                
-            } catch (OutOfMemoryException ex)
+
+                _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
+
+            }
+            catch (OutOfMemoryException ex)
             {
                 MessageBox.Show(ex.Message);
+                pictureBoxImage.Image = _lastImage;
             }
         }
 
@@ -96,12 +108,14 @@ namespace WinFormFingerprintLabelMarker
                 pictureBoxImage.Image = _lastImage;
 
                 _menuService.removeLastSingularity(_groundTruth, listBoxImageNames.SelectedItem.ToString());
+
+                _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
             }
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            if (listBoxImageNames.SelectedItem != null)
+            if (listBoxImageNames.SelectedItem != null && (listBoxImageNames.SelectedIndex + 1) < listBoxImageNames.Items.Count)
             {
 
                 listBoxImageNames.SelectedItem = listBoxImageNames.Items[listBoxImageNames.SelectedIndex + 1];
@@ -118,6 +132,8 @@ namespace WinFormFingerprintLabelMarker
         private void buttonReset_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = _menuService.resetCurrentLabels(_groundTruth, listBoxImageNames.SelectedItem.ToString());
+
+            _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
         }
 
         private void saveGroundTruthToolStripMenuItem_Click(object sender, EventArgs e)
@@ -132,17 +148,17 @@ namespace WinFormFingerprintLabelMarker
 
         private void loadCheckpointFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string imgName = null;
-
             if (_folderPath != null)
             {
                 _groundTruth = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
+
+                _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
             }
 
             if (_groundTruth.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
             {
                 MessageBox.Show("Load the dataset to continue marking!");
-            } 
+            }
         }
     }
 }

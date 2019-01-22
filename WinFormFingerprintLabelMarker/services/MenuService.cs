@@ -53,7 +53,7 @@ namespace WinFormFingerprintLabelMarker.services
 
             return dd;
         }
-        
+
         public Singularity markLabel(MouseEventArgs e, PictureBox image)
         {
             SingularityType type = SingularityType.None;
@@ -76,11 +76,11 @@ namespace WinFormFingerprintLabelMarker.services
 
             return sing;
         }
-               
+
         public void computeMousePosition(MouseEventArgs e, Label lb1, Label lb2)
         {
             lb1.Text = string.Format("({0},{1})", e.X, e.Y);
-            lb2.Text = string.Format("({0},{1})", e.X + GraphicsUtils.offset, e.Y + GraphicsUtils.offset);            
+            lb2.Text = string.Format("({0},{1})", e.X + GraphicsUtils.offset, e.Y + GraphicsUtils.offset);
         }
 
         public void storeCurrentImage(Image img)
@@ -107,17 +107,21 @@ namespace WinFormFingerprintLabelMarker.services
         public void addGroundTruth(Dictionary<String, List<GroundTruth>> map, string nameImage, GroundTruth g)
         {
             List<GroundTruth> l;
-            if(!map.TryGetValue(nameImage, out l))
+            if (!map.TryGetValue(nameImage, out l))
             {
                 map.Add(nameImage, new List<GroundTruth>());
             }
-                        
+
             map[nameImage].Add(g);
         }
 
         public void removeLastSingularity(Dictionary<String, List<GroundTruth>> map, string nameImage)
         {
-            map[nameImage].RemoveAt(map[nameImage].Count - 1);
+            List<GroundTruth> l;
+            if (map.TryGetValue(nameImage, out l))
+            {
+                map[nameImage].RemoveAt(map[nameImage].Count - 1);
+            }
         }
 
         public void saveGroundTruth(FolderBrowserDialog folderBrowser, Dictionary<String, List<GroundTruth>> map, string datasetName)
@@ -145,16 +149,31 @@ namespace WinFormFingerprintLabelMarker.services
 
         public Image markArea(PictureBox image, Singularity sing)
         {
-            try
-            {                                
-                return GraphicsUtils.drawRectangle(image, sing);
-            }
-            catch (OutOfMemoryException ex)
+            return GraphicsUtils.drawRectangle(image, sing);
+        }
+
+        public void updateLabelsCount(Dictionary<String, List<GroundTruth>> map, Label core, Label delta, Label neg)
+        {
+            int c = 0;
+            int d = 0;
+            int n = 0;
+
+            foreach (var item in map)
             {
-                MessageBox.Show(ex.Message);
+                foreach (var g in item.Value)
+                {
+                    if (SingularityType.Core == g._sing._type)
+                        c++;
+                    else if (SingularityType.Delta == g._sing._type)
+                        d++;
+                    else if (SingularityType.Neg == g._sing._type)
+                        n++;
+                }
             }
 
-            return null;
+            core.Text = c.ToString();
+            delta.Text = d.ToString();
+            neg.Text = n.ToString();
         }
     }
 }
