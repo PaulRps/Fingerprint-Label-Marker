@@ -19,7 +19,8 @@ namespace WinFormFingerprintLabelMarker.services
 
             if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
-                string[] paths = Directory.GetFiles(folderBrowser.SelectedPath);//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210");
+                string supportedExtensions = "*.png,*.bmp,*.jpeg,*.tif";
+                var paths = Directory.GetFiles(folderBrowser.SelectedPath, "*", SearchOption.AllDirectories).Where(s => supportedExtensions.Contains(Path.GetExtension(s).ToLower()));
 
                 files = new List<string>();
 
@@ -40,17 +41,18 @@ namespace WinFormFingerprintLabelMarker.services
             return folders[folders.Length - 1];
         }
 
-        public Dictionary<String, List<GroundTruth>> loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
-        {
-            string result = null;
-            Dictionary<String, List<GroundTruth>> dd = null;
+        public SortedDictionary<String, List<GroundTruth>> loadCheckPointFile(OpenFileDialog openFile, PictureBox image, string path)
+        {            
+            SortedDictionary<String, List<GroundTruth>> dd = null;
+            
+            openFile.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (openFile.ShowDialog() == DialogResult.OK)
             {
 
-                dd = FileUtils.buildDataFromFile(openFile.FileName, path);
+                dd = FileUtils.buildDataFromFile(openFile.FileName, path);                
 
             }
-
+            openFile.Filter = "";
             return dd;
         }
 
@@ -93,7 +95,7 @@ namespace WinFormFingerprintLabelMarker.services
             return GraphicsUtils._currentImage;
         }
 
-        public Image resetCurrentLabels(Dictionary<String, List<GroundTruth>> map, string nameImage)
+        public Image resetCurrentLabels(SortedDictionary<String, List<GroundTruth>> map, string nameImage)
         {
             List<GroundTruth> l;
             if (map.TryGetValue(nameImage, out l))
@@ -104,7 +106,7 @@ namespace WinFormFingerprintLabelMarker.services
             return getCurrentImage();
         }
 
-        public void addGroundTruth(Dictionary<String, List<GroundTruth>> map, string nameImage, GroundTruth g)
+        public void addGroundTruth(SortedDictionary<String, List<GroundTruth>> map, string nameImage, GroundTruth g)
         {
             List<GroundTruth> l;
             if (!map.TryGetValue(nameImage, out l))
@@ -115,7 +117,7 @@ namespace WinFormFingerprintLabelMarker.services
             map[nameImage].Add(g);
         }
 
-        public void removeLastSingularity(Dictionary<String, List<GroundTruth>> map, string nameImage)
+        public void removeLastSingularity(SortedDictionary<String, List<GroundTruth>> map, string nameImage)
         {
             List<GroundTruth> l;
             if (map.TryGetValue(nameImage, out l))
@@ -124,7 +126,7 @@ namespace WinFormFingerprintLabelMarker.services
             }
         }
 
-        public void saveGroundTruth(FolderBrowserDialog folderBrowser, Dictionary<String, List<GroundTruth>> map, string datasetName)
+        public void saveGroundTruth(FolderBrowserDialog folderBrowser, SortedDictionary<String, List<GroundTruth>> map, string datasetName)
         {
             if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
@@ -137,7 +139,7 @@ namespace WinFormFingerprintLabelMarker.services
 
                 FileUtils.writeTxtFile(data, datasetName, path);
 
-                Dictionary<SingularityType, List<GroundTruth>> images = FileUtils.buildImageData(map);
+                SortedDictionary<SingularityType, List<GroundTruth>> images = FileUtils.buildImageData(map);
 
                 FileUtils.saveImages(images, path, "bmp");
 
@@ -152,8 +154,11 @@ namespace WinFormFingerprintLabelMarker.services
             return GraphicsUtils.drawRectangle(image, sing);
         }
 
-        public void updateLabelsCount(Dictionary<String, List<GroundTruth>> map, Label core, Label delta, Label neg)
+        public void updateLabelsCount(SortedDictionary<String, List<GroundTruth>> map, Label core, Label delta, Label neg)
         {
+            if (map == null)
+                return;
+
             int c = 0;
             int d = 0;
             int n = 0;

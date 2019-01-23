@@ -22,7 +22,7 @@ namespace WinFormFingerprintLabelMarker
 
         private string _datasetName;
 
-        private Dictionary<String, List<GroundTruth>> _groundTruth;
+        private SortedDictionary<String, List<GroundTruth>> _groundTruth;
 
         private Image _lastImage;
 
@@ -31,7 +31,7 @@ namespace WinFormFingerprintLabelMarker
             InitializeComponent();
 
             _menuService = new MenuService();
-            _groundTruth = new Dictionary<string, List<GroundTruth>>();
+            _groundTruth = new SortedDictionary<string, List<GroundTruth>>();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -80,7 +80,7 @@ namespace WinFormFingerprintLabelMarker
         {
             try
             {
-                _lastImage = pictureBoxImage.Image; 
+                _lastImage = pictureBoxImage.Image;
 
                 Singularity sing = _menuService.markLabel(e, pictureBoxImage);
 
@@ -148,14 +148,20 @@ namespace WinFormFingerprintLabelMarker
 
         private void loadCheckpointFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SortedDictionary<String, List<GroundTruth>> gt = null;
             if (_folderPath != null)
             {
-                _groundTruth = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
-
-                _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
+                gt = _menuService.loadCheckPointFile(openFileDialog, pictureBoxImage, _folderPath);
+                
+                if (gt != null && gt.Count > 0)
+                {
+                    _groundTruth = gt;
+                    _menuService.updateLabelsCount(_groundTruth, labelCoreCount, labelDeltaCount, labelNegCount);
+                    listBoxImageNames.SelectedItem = _groundTruth.Keys.Last();
+                }
             }
 
-            if (_groundTruth.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
+            if (gt.Count == 0 || listBoxImageNames == null || listBoxImageNames.Items.Count == 0)
             {
                 MessageBox.Show("Load the dataset to continue marking!");
             }
