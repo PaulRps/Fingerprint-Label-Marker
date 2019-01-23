@@ -42,6 +42,7 @@ namespace WinFormFingerprintLabelMarker
             {
                 _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
                 _datasetName = _menuService.getDatasetName(_folderPath);
+                labelDatasetName.Text = _datasetName;
                 listBoxImageNames.DataSource = files;
                 _menuService.updateLabelFilesCount(labelFilesCount, 1, files.Length);
             }

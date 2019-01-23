@@ -60,6 +60,7 @@ namespace WinFormFingerprintLabelMarker
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.labelFilesCount = new System.Windows.Forms.Label();
             this.labelImageDim = new System.Windows.Forms.Label();
+            this.labelDatasetName = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBoxLabelInfo.SuspendLayout();
             this.groupBoxMousePositionInfo.SuspendLayout();
@@ -339,6 +340,16 @@ namespace WinFormFingerprintLabelMarker
             this.labelImageDim.Size = new System.Drawing.Size(0, 12);
             this.labelImageDim.TabIndex = 18;
             // 
+            // labelDatasetName
+            // 
+            this.labelDatasetName.AutoSize = true;
+            this.labelDatasetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDatasetName.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.labelDatasetName.Location = new System.Drawing.Point(26, 27);
+            this.labelDatasetName.Name = "labelDatasetName";
+            this.labelDatasetName.Size = new System.Drawing.Size(0, 12);
+            this.labelDatasetName.TabIndex = 19;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,6 +358,7 @@ namespace WinFormFingerprintLabelMarker
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(911, 579);
+            this.Controls.Add(this.labelDatasetName);
             this.Controls.Add(this.labelImageDim);
             this.Controls.Add(this.labelFilesCount);
             this.Controls.Add(this.labelBottomRightPoint);
@@ -413,6 +425,7 @@ namespace WinFormFingerprintLabelMarker
         private System.Windows.Forms.Label labelNegCount;
         private System.Windows.Forms.Label labelFilesCount;
         private System.Windows.Forms.Label labelImageDim;
+        private System.Windows.Forms.Label labelDatasetName;
     }
 }
 
