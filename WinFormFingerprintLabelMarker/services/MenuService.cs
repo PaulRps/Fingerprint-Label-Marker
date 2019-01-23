@@ -145,6 +145,8 @@ namespace WinFormFingerprintLabelMarker.services
 
                 map.Clear();
 
+                MessageBox.Show(string.Format("Ground truth saved in {0}", datasetName));
+
             }
 
         }
@@ -179,6 +181,11 @@ namespace WinFormFingerprintLabelMarker.services
             core.Text = c.ToString();
             delta.Text = d.ToString();
             neg.Text = n.ToString();
+        }
+
+        public void updateLabelFilesCount(Label lb, int currentImgIndex, int amountFiles)
+        {
+            lb.Text = string.Format("Files: {0} / {1}", currentImgIndex, amountFiles);
         }
     }
 }

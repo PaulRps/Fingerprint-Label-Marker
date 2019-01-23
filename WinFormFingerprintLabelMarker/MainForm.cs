@@ -43,7 +43,7 @@ namespace WinFormFingerprintLabelMarker
                 _folderPath = folderBrowser.SelectedPath;//@"C:\Users\ricar\Downloads\spd_train_dataset\DataBase_0001_0210";                
                 _datasetName = _menuService.getDatasetName(_folderPath);
                 listBoxImageNames.DataSource = files;
-                labelFilesCount.Text = string.Format("Files: {0}", files.Length);
+                _menuService.updateLabelFilesCount(labelFilesCount, 1, files.Length);
             }
         }
 
@@ -56,6 +56,7 @@ namespace WinFormFingerprintLabelMarker
                 pictureBoxImage.Width = pictureBoxImage.Image.Width;
                 pictureBoxImage.Height = pictureBoxImage.Image.Height;
                 labelImageDim.Text = string.Format("W x H : {0} x {1}", pictureBoxImage.Width, pictureBoxImage.Height);
+                _menuService.updateLabelFilesCount(labelFilesCount, listBoxImageNames.SelectedIndex+1, listBoxImageNames.Items.Count);
 
                 List<GroundTruth> l;
                 if (_groundTruth.TryGetValue(listBoxImageNames.SelectedItem.ToString(), out l))
@@ -141,8 +142,7 @@ namespace WinFormFingerprintLabelMarker
             if (_groundTruth != null && _groundTruth.Count > 0)
             {
                 _menuService.saveGroundTruth(folderBrowser, _groundTruth, _datasetName);
-
-                MessageBox.Show(string.Format("Ground truth saved in {0}", _datasetName));
+                
             }
         }
 
