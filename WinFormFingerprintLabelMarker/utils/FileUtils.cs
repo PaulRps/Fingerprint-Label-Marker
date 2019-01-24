@@ -43,7 +43,7 @@ namespace WinFormFingerprintLabelMarker.utils
             Directory.CreateDirectory(path);
         }
 
-        public static void saveImages(Dictionary<SingularityType, List<GroundTruth>> images, string path, string format)
+        public static void saveImages(SortedDictionary<SingularityType, List<GroundTruth>> images, string path, string format)
         {
             string folder = null;
 
@@ -75,7 +75,7 @@ namespace WinFormFingerprintLabelMarker.utils
             }
         }
 
-        public static List<string> buildTextData(Dictionary<String, List<GroundTruth>> map)
+        public static List<string> buildTextData(SortedDictionary<String, List<GroundTruth>> map)
         {
             List<string> data = new List<string>();
 
@@ -100,9 +100,9 @@ namespace WinFormFingerprintLabelMarker.utils
             return data;
         }
 
-        public static Dictionary<SingularityType, List<GroundTruth>> buildImageData(Dictionary<String, List<GroundTruth>> map)
+        public static SortedDictionary<SingularityType, List<GroundTruth>> buildImageData(SortedDictionary<String, List<GroundTruth>> map)
         {
-            Dictionary<SingularityType, List<GroundTruth>> data = new Dictionary<SingularityType, List<GroundTruth>>();
+          SortedDictionary<SingularityType, List<GroundTruth>> data = new SortedDictionary<SingularityType, List<GroundTruth>>();
 
             List<GroundTruth> l;
             foreach (var item in map)
@@ -123,14 +123,14 @@ namespace WinFormFingerprintLabelMarker.utils
             return data;
         }
 
-        public static Dictionary<String, List<GroundTruth>> buildDataFromFile(string pathFile, string pathDataset)
+        public static SortedDictionary<String, List<GroundTruth>> buildDataFromFile(string pathFile, string pathDataset)
         {
             string[] data = File.ReadAllLines(pathFile);
             string[] txt = null;
             string imgName = null;
             string dbName = new DirectoryInfo(pathDataset).Name;
             GroundTruth gt = null;
-            Dictionary<String, List<GroundTruth>> groundTruth = new Dictionary<string, List<GroundTruth>>();
+            SortedDictionary<String, List<GroundTruth>> groundTruth = new SortedDictionary<string, List<GroundTruth>>();
 
             MenuService menuService = new MenuService();
 
